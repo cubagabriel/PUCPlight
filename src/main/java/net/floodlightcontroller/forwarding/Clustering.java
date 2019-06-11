@@ -505,7 +505,7 @@ public class Clustering extends ForwardingBase implements IFloodlightModule, IOF
 		instList.add(apply);
 		fmb.setMatch(mb.build())
 				// was match w/o modifying input port
-				.setInstructions(instList).setIdleTimeout(200).setHardTimeout(FLOWMOD_DEFAULT_HARD_TIMEOUT)
+				.setInstructions(instList).setIdleTimeout(5).setHardTimeout(FLOWMOD_DEFAULT_HARD_TIMEOUT)
 				.setBufferId(OFBufferId.NO_BUFFER).setCookie(cookie).setOutPort(outPort)
 				.setPriority(3);
 		sw.write(fmb.build());

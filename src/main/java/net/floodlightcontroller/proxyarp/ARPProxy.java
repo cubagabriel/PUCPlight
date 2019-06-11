@@ -603,7 +603,7 @@ public class ARPProxy extends TimerTask implements IOFMessageListener, IFloodlig
 
 		/* El nodo original */
 		IPv4Address original = arp.getTargetProtocolAddress();
-		boolean bool = true;
+		boolean bool = false;
 		IPv4Address algunServer = circuitService.queryServer(arp.getTargetProtocolAddress());
 		int bypass = algunServer != null ? 1 : 0;
 		//int bypass=0;
@@ -652,7 +652,7 @@ public class ARPProxy extends TimerTask implements IOFMessageListener, IFloodlig
 				sendARPReply(arpRequest);
 				IRoutingDecision decision = new RoutingDecision(switchId, portId,
 						IDeviceService.fcStore.get(cntx, IDeviceService.CONTEXT_SRC_DEVICE),
-						IRoutingDecision.RoutingAction.NONE);
+						IRoutingDecision.RoutingAction.FORWARD);
 				decision.addToContext(cntx);
 			}
 		}

@@ -519,7 +519,7 @@ public class VirtualNetworkManager implements IFloodlightModule, IVirtualNetwork
 	@Override
 	public boolean isCallbackOrderingPostreq(OFType type, String name) {
 		// We need to go before forwarding
-		return (type.equals(OFType.PACKET_IN) && name.equals("forwarding"));
+		return (type.equals(OFType.PACKET_IN) && name.equals("forwarding")|| (name.equals("clustering")));
 	}
 
 	@Override
@@ -597,7 +597,7 @@ public class VirtualNetworkManager implements IFloodlightModule, IVirtualNetwork
 	protected Boolean oneSameNetwork(MacAddress m1, String net, MacAddress m2, String id,String type) {
 		String net1 = net;
 		String net2 = macTovnid.get(m2);
-		///log.info("Net1 {} to Net2 {} ", new Object[] { m1 + " " + net1 }, new Object[] { m2 + " " + net2 });
+		log.info("Net1 {} to Net2 {} ", new Object[] { m1 + " " + net1 }, new Object[] { m2 + " " + net2 });
 		if (net1 == null || net1.equals("0")) {
 			log.debug("Net of H1 {} is {} , device probably was not yet discovered or packet received in a core switch, will drop...",new Object[] {id + " " + type + " " + m1}, new Object[] {net1});
 			///return Boolean.TRUE;
@@ -697,7 +697,8 @@ public class VirtualNetworkManager implements IFloodlightModule, IVirtualNetwork
 							new Object[] { device.getMACAddress() });
 
 				}
-				if (!this.addByAP(device)) {
+				///TODO
+				if (!this.addByAP(device)&!this.addByIP(device)) {
 					vNetsByvnid.get("1").addHost(device.getMACAddress(), 0, device.getAttachmentPoints()[0]);
 					macTovnid.put(device.getMACAddress(), "1");
 					VirtualNetworkManager.this.setTableMissPerPort("1", device.getAttachmentPoints()[0]);
